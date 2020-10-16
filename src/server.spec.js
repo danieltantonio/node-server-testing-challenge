@@ -11,4 +11,26 @@ describe('server.js', () => {
             })
         })
     })
+
+    describe('POST /', () => {
+        it('Should post a user to memory.', () => {
+            return supertest(server)
+            .post('/')
+            .send({ name: 'Daniel' })   
+            .set('Accept', 'application/json')
+            .then(res => {
+                expect(res.status).toBe(201);
+            });
+        })
+
+        it('Should return a 400 error if missing field', () => {
+            return supertest(server)
+            .post('/')
+            .send({})
+            .set('Accept', 'application/json')
+            .then(res => {
+                expect(res.status).toBe(400);
+            });
+        })
+    })
 });
